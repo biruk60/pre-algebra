@@ -72,6 +72,36 @@ class IntroScene(Scene):
             )
         )
         self.wait()
+
+class OutroScene(Scene):
+    def construct(self):
+        # Texts
+        share_text = Text("Share", font_size=44, color=BLUE)
+        like_text = Text("Like", font_size=44, color=GREEN)
+        subscribe_text = Text("Subscribe", font_size=44, color=RED)
+
+        # Shapes
+        share_circle = Circle(radius=1.2, color=BLUE)
+        like_triangle = Triangle().scale(1.6).set_color(GREEN)
+        subscribe_rect = Rectangle(width=4, height=2.4, color=RED)
+
+        # Put text in shapes
+        share_group = VGroup(share_circle, share_text).arrange(ORIGIN)
+        like_group = VGroup(like_triangle, like_text).next_to(share_group, RIGHT)
+        subscribe_group = VGroup(subscribe_rect, subscribe_text).next_to(like_group, RIGHT)
+
+        # Stack vertically
+        final_group = VGroup(share_group, like_group, subscribe_group).arrange(RIGHT,buff=0.4)
+
+        # Animations
+        self.play(FadeIn(share_group))
+        self.wait(0.5)
+        self.play(FadeIn(like_group), like_text.animate.set_color(YELLOW))
+        self.wait(0.5)
+        self.play(FadeIn(subscribe_group), subscribe_text.animate.set_color(ORANGE))
+        self.wait(1)
+        
+        self.play(ShrinkToCenter(final_group))
         
 class NumberLineWithAnnotations(Scene):
     def construct(self):
