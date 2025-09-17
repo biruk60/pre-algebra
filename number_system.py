@@ -1,77 +1,150 @@
 from manim import *
 from manim.mobject.geometry.tips import StealthTip
 
-class IntroScene(Scene):
+class IntroScene(ThreeDScene):
     def construct(self):
         # Define the number line
-        triangle = Triangle()
-        dot = Dot(3 * UR, color=GREEN)
-        circle = Circle()
-        square = Square()
-        self.play(SpinInFromNothing(triangle))
-        self.play(GrowFromPoint(circle, dot, dot.get_color()))
-        self.play(GrowFromPoint(square, ORIGIN))
-        shapes = VGroup(triangle, circle, square)
-        self.play(ShrinkToCenter(shapes))
+        # triangle = Triangle()
+        # dot = Dot(3 * UR, color=GREEN)
+        # circle = Circle()
+        # square = Square()
+        # self.play(SpinInFromNothing(triangle))
+        # self.play(GrowFromPoint(circle, dot, dot.get_color()))
+        # self.play(GrowFromPoint(square, ORIGIN))
+        # shapes = VGroup(triangle, circle, square)
+        # self.play(ShrinkToCenter(shapes))
         # self.play(ShrinkToCenter(triangle),ShrinkToCenter(circle),ShrinkToCenter(square))
         
         # self.play(FadeTransform(triangle, circle))
+        # self.wait(1)
+        # ax = Axes()
+        # sine = ax.plot(np.sin, color=RED)
+        # alpha = ValueTracker(0)
+        # point = always_redraw(
+        #     lambda: Dot(
+        #         sine.point_from_proportion(alpha.get_value()),
+        #         color=BLUE
+        #     )
+        # )
+        # tangent = always_redraw(
+        #     lambda: TangentLine(
+        #         sine,
+        #         alpha=alpha.get_value(),
+        #         color=YELLOW,
+        #         length=4
+        #     )
+        # )
+        # self.add(ax, sine, point, tangent)
+        # self.play(alpha.animate.set_value(1), rate_func=linear, run_time=2)
+        # graphs = VGroup(ax, sine, point, tangent)
+        # Import SVG file
+
+
+        # colors = [RED, GREEN, BLUE]
+
+        # starting_points = VGroup(
+        #     *[
+        #         Dot(LEFT + pos, color=color)
+        #         for pos, color in zip([UP, DOWN, LEFT], colors)
+        #     ]
+        # )
+        
+        # self.add(starting_points)
+        # self.play(FadeTransform(finish_points,starting_points))
+
+        # finish_points = VGroup(
+        #     *[
+        #         Dot(RIGHT + pos, color=color)
+        #         for pos, color in zip([ORIGIN, UP, DOWN], colors)
+        #     ]
+        # )
+
+        
+        
+        # for dot in starting_points:
+        #     self.add(TracedPath(dot.get_center, stroke_color=dot.get_color()))
+
+        # self.wait()
+        # self.play(
+        #     Create(finish_points),
+        #     Transform(
+        #         starting_points,
+        #         finish_points,
+        #         path_func=utils.paths.clockwise_path(),
+        #         run_time=2,
+        #     )
+        # )
+        # background_svg = SVGMobject("assets/man-stickman-svgrepo-com.svg")
+        # background_svg.set_z_index(-10)  # Make sure it is rendered at the back
+        # background_svg.set(width=3)      # Resize as needed
+        # self.add_fixed_in_frame_mobjects(background_svg)
+        # intro_text= Text('Maths with BK')
+        # Add the SVG to the scene
+        
+        self.wait()
+        intro_text= Text('Maths with BK', fill_opacity=1).to_edge(UP)
+        bg_text = Text("@BK_BROOK", fill_opacity=0.065).scale(3)
+        bg_text.set_z_index(-10)  # Keep behind everything
+
+        # Add text as a fixed background element
+        self.add_fixed_in_frame_mobjects(bg_text)
+        axes = ThreeDAxes(
+            x_range=[-6, 6, 1],
+            y_range=[-6, 6, 1],
+            z_range=[-6, 6, 1],
+            x_length=8,
+            y_length=6,
+            z_length=6,           
+            axis_config={'tip_shape': StealthTip } 
+        )
+        
+        # axes.add_tip(tip_shape=StealthTip, at_start=True)
+        # axes.add_coordinates()
+        graph = axes.plot(lambda x: x ** 2, x_range=[-2, 2, 1], color=YELLOW)
+        rects = axes.get_area(
+                                graph,
+                                x_range=[-2, 2],
+                                color=BLUE,
+                                opacity=1
+                            )
+
+        graph2 = axes.plot_parametric_curve(
+            lambda t: np.array([np.cos(t), np.sin(t), t]),
+            t_range=[-2 * PI, 2 * PI],
+            color=RED,
+        )
+
+        self.play(FadeIn(axes, runt_time=1), FadeIn(graph, run_time=2))
+        self.wait()
+
+        ##THE CAMERA IS AUTO SET TO PHI = 0 and THETA = -90
+
+        self.move_camera(phi=60 * DEGREES)
+        self.wait()
+        self.move_camera(theta=-45 * DEGREES)
+
+        self.begin_ambient_camera_rotation(
+            rate=PI / 10, about="theta"
+        )  # Rotates at a rate of radians per second
+        self.wait()
+        self.play(Create(rects), run_time=3)
+        self.play(Create(graph2))
+        self.wait()
+        self.stop_ambient_camera_rotation()
+
+        self.wait()
+        self.begin_ambient_camera_rotation(
+            rate=PI / 10, about="phi"
+        )  # Rotates at a rate of radians per second
+        self.wait(1) 
+        self.stop_ambient_camera_rotation()
         self.wait(1)
-        ax = Axes()
-        sine = ax.plot(np.sin, color=RED)
-        alpha = ValueTracker(0)
-        point = always_redraw(
-            lambda: Dot(
-                sine.point_from_proportion(alpha.get_value()),
-                color=BLUE
-            )
-        )
-        tangent = always_redraw(
-            lambda: TangentLine(
-                sine,
-                alpha=alpha.get_value(),
-                color=YELLOW,
-                length=4
-            )
-        )
-        self.add(ax, sine, point, tangent)
-        self.play(alpha.animate.set_value(1), rate_func=linear, run_time=2)
-        graphs = VGroup(ax, sine, point, tangent)
-      
-        colors = [RED, GREEN, BLUE]
-
-        starting_points = VGroup(
-            *[
-                Dot(LEFT + pos, color=color)
-                for pos, color in zip([UP, DOWN, LEFT], colors)
-            ]
-        )
-        self.add(starting_points)
-        self.play(Transform(graphs,starting_points))
-
-        finish_points = VGroup(
-            *[
-                Dot(RIGHT + pos, color=color)
-                for pos, color in zip([ORIGIN, UP, DOWN], colors)
-            ]
-        )
-
+        self.add_fixed_in_frame_mobjects(intro_text)
+        self.play(Write(intro_text))
+        self.wait(2)
+        self.play(Unwrite(intro_text))
+        self.wait(5)
         
-        
-        for dot in starting_points:
-            self.add(TracedPath(dot.get_center, stroke_color=dot.get_color()))
-
-        self.wait()
-        self.play(
-            Create(finish_points),
-            Transform(
-                starting_points,
-                finish_points,
-                path_func=utils.paths.clockwise_path(),
-                run_time=2,
-            )
-        )
-        self.wait()
 
 class OutroScene(Scene):
     def construct(self):
