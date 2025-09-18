@@ -80,9 +80,9 @@ class IntroScene(ThreeDScene):
         # self.add_fixed_in_frame_mobjects(background_svg)
         # intro_text= Text('Maths with BK')
         # Add the SVG to the scene
-        
+        manimpango.register_font("assets/fonts/nyala_regular.ttf")
         self.wait()
-        intro_text= Text('Maths with BK', fill_opacity=1).to_edge(UP)
+        # intro_text= Text('ሒሳብ ምስ ብሩኽ', font="Nyala", fill_opacity=1).to_edge(UP)
         bg_text = Text("@BK_BROOK", fill_opacity=0.065).scale(3)
         bg_text.set_z_index(-10)  # Keep behind everything
 
@@ -100,7 +100,7 @@ class IntroScene(ThreeDScene):
         
         # axes.add_tip(tip_shape=StealthTip, at_start=True)
         # axes.add_coordinates()
-        graph = axes.plot(lambda x: x ** 2, x_range=[-2, 2, 1], color=YELLOW)
+        graph = axes.plot(lambda x: x ** 2, x_range=[-2, 2, 1], color=BLUE)
         rects = axes.get_area(
                                 graph,
                                 x_range=[-2, 2],
@@ -111,10 +111,11 @@ class IntroScene(ThreeDScene):
         graph2 = axes.plot_parametric_curve(
             lambda t: np.array([np.cos(t), np.sin(t), t]),
             t_range=[-2 * PI, 2 * PI],
-            color=RED,
+            color='#EDC001',
         )
-
-        self.play(FadeIn(axes, runt_time=1), FadeIn(graph, run_time=2))
+        self.play(GrowFromPoint(axes, ORIGIN),runt_time=1)
+        self.play(Create(graph), run_time=2)
+        # self.play(FadeIn(axes, runt_time=1), FadeIn(graph, run_time=2))
         self.wait()
 
         ##THE CAMERA IS AUTO SET TO PHI = 0 and THETA = -90
@@ -138,12 +139,64 @@ class IntroScene(ThreeDScene):
         )  # Rotates at a rate of radians per second
         self.wait(1) 
         self.stop_ambient_camera_rotation()
-        self.wait(1)
-        self.add_fixed_in_frame_mobjects(intro_text)
-        self.play(Write(intro_text))
         self.wait(2)
-        self.play(Unwrite(intro_text))
-        self.wait(5)
+        what = VGroup(axes, graph, graph2, rects)
+        self.play(ShrinkToCenter(what))
+        self.wait()
+        # Heights and widths for better control
+        heights = [2, 2, 2]
+        widths = [0.8, 0.7, 0.8]
+
+        # First Column
+        col1_rectangle_width = widths[0]
+        col1 = VGroup(
+            Square(side_length=col1_rectangle_width, color='#4B5320', fill_opacity=0.8),
+            Rectangle(height=2, width=col1_rectangle_width, color='#82EEFD', fill_opacity=0.8),            
+            Rectangle(height=2, width=col1_rectangle_width, color='#FFDA03', fill_opacity=0.8) # unified width
+        ).arrange(DOWN, buff=0.3)
+
+        # Second Column
+        col2_rectangle_width = col1_rectangle_width # match first column width
+        col2 = VGroup(
+            Rectangle(height=2, width=col2_rectangle_width, color='#FFE135', fill_opacity=0.8),
+            Square(side_length=col2_rectangle_width, color='#4F7942', fill_opacity=0.8),            
+            Rectangle(height=2, width=col2_rectangle_width, color='#63C5DA', fill_opacity=0.8)
+        ).arrange(DOWN, buff=0.3)
+
+        # Third Column
+        col3_rectangle_width = col1_rectangle_width # match first column width
+        col3 = VGroup(
+            Rectangle(height=2, width=col3_rectangle_width, color='#52B2BF', fill_opacity=0.8),           
+            Rectangle(height=2, width=col3_rectangle_width, color='#EDC001', fill_opacity=0.8),
+            Square(side_length=col3_rectangle_width, color='#708238', fill_opacity=0.8),
+        ).arrange(DOWN, buff=0.3)
+
+        # Align bottoms of all columns
+        for col in [col1, col2, col3]:
+            col.move_to(ORIGIN)
+        columns = VGroup(col1, col2, col3).arrange(RIGHT, buff=0.5)
+        columns.align_to(col1, DOWN) # aligns bottom edge
+
+        self.add_fixed_in_frame_mobjects(columns)
+        self.play(FadeIn(columns), run_time=2)
+        self.wait()
+        # Add text below the aligned columns
+        intro_text = Text("ሒሳብ ምስ ብሩኽ", font_size=36, font="Nyala")
+        intro_text.next_to(columns, DOWN, buff=0.3)
+        self.add_fixed_in_frame_mobjects(intro_text)
+
+        # self.wait(2)
+        # self.add_fixed_in_frame_mobjects(intro_text)
+        self.play(Write(intro_text), run_time=1)
+        self.wait(1)
+        intro_text.save_state()
+        columns.save_state()
+        matrix = [[1, 1], [0, 2/3]]
+        self.play(ApplyMatrix(matrix, intro_text), ApplyMatrix(matrix, columns))
+        self.wait()
+        self.play(Restore(intro_text),Restore(columns), run_time=1)
+        self.wait(2)
+        
         
 
 class OutroScene(Scene):
