@@ -2,11 +2,19 @@
 from manim import * 
 import manimpango
 
-class TOCAnimation(Scene):
+class TableOfContents(Scene):
     def construct(self):
-        # Sections for the table of contents
+        # Register custom font if available
+        manimpango.register_font("assets/fonts/Nyala Regular.ttf")
+        self.wait()
+        
+        # Modified sections with indentation for "Propositions" under "Proposition"
         sections = [
-            "Introduction",
+            "0. Introduction",
+            "1. Proposition",
+            "    1.1 Proposition Types",  # Indented to show hierarchy
+            "    1.2 Propositional Connectives",  # Indented to show hierarchy
+            "       1.2.1 Negation",  # Indented to show hierarchy
             "Background",
             "Methods",
             "Results",
@@ -14,47 +22,46 @@ class TOCAnimation(Scene):
             "Conclusion"
         ]
         
-        # Create Text mobjects for each section
-        section_texts = [Text(s, font_size=36) for s in sections]
+        # Create MarkupText for each section
+        section_texts = []
+        for section in sections:
+            # Count leading spaces for indentation simulation
+            leading_spaces = len(section) - len(section.lstrip(' '))
+            indent_shift = leading_spaces * 0.3  # tweak this for horizontal indent size
+            text = MarkupText(section.strip(), font_size=36, font="Nyala")
+            text.shift(indent_shift * LEFT)  # shift left or right based on indent
+            section_texts.append(text)
         
-        # Arrange vertically with some spacing
-        toc = VGroup(*section_texts).arrange(DOWN, aligned_edge=LEFT, buff=0.7)
+        # Arrange vertically with spacing but ignoring horizontal alignment to keep indentation
+        toc = VGroup(*section_texts).arrange(DOWN, buff=0.7)
         
-        # Create a background rectangle for each text for highlighting
+        # Create highlights
         highlights = VGroup(*[
-            Rectangle(width=text.width+0.5, height=text.height+0.2, fill_opacity=0, fill_color=YELLOW, stroke_width=0)
+            Rectangle(
+                width=text.width + 0.5,
+                height=text.height + 0.2,
+                fill_opacity=0,
+                fill_color=YELLOW,
+                stroke_width=0
+            ).move_to(text)
             for text in section_texts
         ])
         
-        # Position highlights behind texts
-        for rect, text in zip(highlights, section_texts):
-            rect.move_to(text.get_center())
-        
-        # Group highlights and texts to add to scene
-        grouped = VGroup(highlights, *section_texts)
+        # Group highlights and text side by side
+        grouped = VGroup(*[
+            VGroup(rect, text) for rect, text in zip(highlights, section_texts)
+        ]).arrange(DOWN, buff=0.7)
+
         self.add(grouped)
         
-        # Animate highlighting each section one by one
-        for i in range(len(sections)):
-            # Highlight current section
-            self.play(
-                highlights[i].animate.set_fill(YELLOW, opacity=0.5),
-                run_time=1
-            )
-            
-            # Wait so highlight is visible
+        # Animate highlight for each line sequentially
+        for i in range(len(section_texts)):
+            self.play(highlights[i].animate.set_fill(YELLOW, opacity=0.5), run_time=1)
             self.wait(1)
-            
-            # Remove highlight before moving to next, except last
-            if i < len(sections) - 1:
-                self.play(
-                    highlights[i].animate.set_fill(YELLOW, opacity=0),
-                    run_time=0.5
-                )
-        
-        # Keep final highlight visible for a moment
-        self.wait(2)
+            if i < len(section_texts) - 1:
+                self.play(highlights[i].animate.set_fill(YELLOW, opacity=0), run_time=0.5)
 
+        self.wait(2)
 
  class SetColumnColorsExample(Scene):
     def construct(self):
