@@ -2,18 +2,60 @@
 from manim import * 
 import manimpango
 
-
-class TableOfContents(Scene):
+class TOCAnimation(Scene):
     def construct(self):
-        matrix_1 = Matrix([["Intro", "Chapter 1"],
-                        ["Method", "Chapter 2"]])
-        self.play(Write(matrix_1))
-        self.wait(1)
-        # Transform to another matrix (like a new section appearing)
-        matrix_2 = Matrix([["Intro", "Chapter 1", "Summary"],
-                        ["Method", "Chapter 2", "Review"]])
-        self.play(Transform(matrix_1, matrix_2))
-        self.wait(1)
+        # Sections for the table of contents
+        sections = [
+            "Introduction",
+            "Background",
+            "Methods",
+            "Results",
+            "Discussion",
+            "Conclusion"
+        ]
+        
+        # Create Text mobjects for each section
+        section_texts = [Text(s, font_size=36) for s in sections]
+        
+        # Arrange vertically with some spacing
+        toc = VGroup(*section_texts).arrange(DOWN, aligned_edge=LEFT, buff=0.7)
+        
+        # Create a background rectangle for each text for highlighting
+        highlights = VGroup(*[
+            Rectangle(width=text.width+0.5, height=text.height+0.2, fill_opacity=0, fill_color=YELLOW, stroke_width=0)
+            for text in section_texts
+        ])
+        
+        # Position highlights behind texts
+        for rect, text in zip(highlights, section_texts):
+            rect.move_to(text.get_center())
+        
+        # Group highlights and texts to add to scene
+        grouped = VGroup(highlights, *section_texts)
+        self.add(grouped)
+        
+        # Animate highlighting each section one by one
+        for i in range(len(sections)):
+            # Highlight current section
+            self.play(
+                highlights[i].animate.set_fill(YELLOW, opacity=0.5),
+                run_time=1
+            )
+            
+            # Wait so highlight is visible
+            self.wait(1)
+            
+            # Remove highlight before moving to next, except last
+            if i < len(sections) - 1:
+                self.play(
+                    highlights[i].animate.set_fill(YELLOW, opacity=0),
+                    run_time=0.5
+                )
+        
+        # Keep final highlight visible for a moment
+        self.wait(2)
+
+
         
 class TruthTableNEGATION(Scene):
     def construct(self):
