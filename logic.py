@@ -64,6 +64,15 @@ class TOCAnimation(Scene):
             # row_labels=[Text("R1"), Text("R2")],
             col_labels=[Text("P"), Text("~P")]
         ).set_column_colors([BLUE], [GREEN],[YELLOW])
+        # table = Table(
+        #      [["", ""],
+        #      ["", ""]],
+        #     col_labels=[Text("P"), Text("~P")]
+        # ).set_column_colors([BLUE], [GREEN],[YELLOW])
+        # table.get_cell((1, 1)).add(Text("T"))
+        # table.get_cell((1, 2)).add(Text("F"))
+        # table.get_cell((2, 1)).add(Text("F"))
+        # table.get_cell((2, 2)).add(Text("T"))
         col1 = SurroundingRectangle(table.get_columns()[0])
         col2 = SurroundingRectangle(table.get_columns()[1])
         row1 = SurroundingRectangle(table.get_rows()[1])
