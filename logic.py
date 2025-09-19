@@ -56,7 +56,32 @@ class TOCAnimation(Scene):
         self.wait(2)
 
 
+ class SetColumnColorsExample(Scene):
+    def construct(self):
+        table = Table(
+            [["T", "F"],
+            ["F","T"]],
+            # row_labels=[Text("R1"), Text("R2")],
+            col_labels=[Text("P"), Text("~P")]
+        ).set_column_colors([BLUE], [GREEN],[YELLOW])
+        col1 = SurroundingRectangle(table.get_columns()[0])
+        col2 = SurroundingRectangle(table.get_columns()[1])
+        row1 = SurroundingRectangle(table.get_rows()[1])
+        row2 = SurroundingRectangle(table.get_rows()[2])
+        self.add(table)
+        # self.play(chama.animate.set_opacity(1), run_time=1)
+        self.play(Create(col1), run_time=1)
+        self.wait()       
+        self.play(ReplacementTransform(col1, col2), run_time=1)
+        self.wait()
+        self.play(FadeOut(col2), run_time=1)
+        self.wait()
+        self.play(Create(row1), run_time=1)
+        self.wait()
+        self.play(ReplacementTransform(row1, row2), run_time=1)
+        self.wait()
         
+       
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
