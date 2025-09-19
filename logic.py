@@ -2,6 +2,19 @@
 from manim import * 
 import manimpango
 
+
+class TableOfContents(Scene):
+    def construct(self):
+        matrix_1 = Matrix([["Intro", "Chapter 1"],
+                        ["Method", "Chapter 2"]])
+        self.play(Write(matrix_1))
+        self.wait(1)
+        # Transform to another matrix (like a new section appearing)
+        matrix_2 = Matrix([["Intro", "Chapter 1", "Summary"],
+                        ["Method", "Chapter 2", "Review"]])
+        self.play(Transform(matrix_1, matrix_2))
+        self.wait(1)
+        
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
