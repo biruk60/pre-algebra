@@ -3,13 +3,16 @@ import manimpango
 
 class IntroScene(ThreeDScene):
     def construct(self):
+        background = ImageMobject("assets/images/blackboard.png").set_opacity(0.55)
         manimpango.register_font("assets/fonts/nyala_regular.ttf")
-        self.wait()
-        # intro_text= Text('ሒሳብ ምስ ብሩኽ', font="Nyala", fill_opacity=1).to_edge(UP)
-        bg_text = Text("@BK_BROOK", fill_opacity=0.065).scale(3)
-        bg_text.set_z_index(-10)  # Keep behind everything
+        background.scale_to_fit_width(config.frame_width)
+        background.scale_to_fit_height(config.frame_height)
+        background.set_z_index(-10)  # Keep behind everything
+        bg_text = Text("@BK_BROOK", fill_opacity=0.025).scale(3)
+        bg_text.set_z_index(-9)  # Keep behind everything
 
         # Add text as a fixed background element
+        self.add_fixed_in_frame_mobjects(background)  
         self.add_fixed_in_frame_mobjects(bg_text)
         axes = ThreeDAxes(
             x_range=[-6, 6, 1],
@@ -124,7 +127,7 @@ class IntroScene(ThreeDScene):
         self.play(ReplacementTransform(col3[0], col3[1]),ReplacementTransform(col3[1], col3[2]))
         self.play(ReplacementTransform(col1, col2))
         self.play(ReplacementTransform(col2, col3))
-    
+        self.play(FadeOut(columns))
         self.wait()
         
         # manim -ql -p --disable_caching  -o intro_video.mp4 .\intro.py IntroScene
