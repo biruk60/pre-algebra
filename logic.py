@@ -4,64 +4,69 @@ import manimpango
 
 class TableOfContents(Scene):
     def construct(self):
-        # Register custom font if available
+        background = ImageMobject("assets/images/blackboard.png")
+        
+        # Scale the image to fit the height of the scene (approx 8 units)
+        background.scale_to_fit_height(config.frame_height)
+        
+        # Move it to the center and push it back behind other mobjects
+        background.move_to(ORIGIN).set_z_index(-1)
+        
+        # Add background
+        self.add(background)
         manimpango.register_font("assets/fonts/Nyala Regular.ttf")
         self.wait()
-        
-        # Modified sections with indentation for "Propositions" under "Proposition"
-        sections = [
-            "0. Introduction",
-            "1. Proposition",
-            "    1.1 Proposition Types",  # Indented to show hierarchy
-            "    1.2 Propositional Connectives",  # Indented to show hierarchy
-            "       1.2.1 Negation",  # Indented to show hierarchy
-            "Background",
-            "Methods",
-            "Results",
-            "Discussion",
-            "Conclusion"
-        ]
-        
-        # Create MarkupText for each section
-        section_texts = []
-        for section in sections:
-            # Count leading spaces for indentation simulation
-            leading_spaces = len(section) - len(section.lstrip(' '))
-            indent_shift = leading_spaces * 0.3  # tweak this for horizontal indent size
-            text = MarkupText(section.strip(), font_size=36, font="Nyala")
-            text.shift(indent_shift * LEFT)  # shift left or right based on indent
-            section_texts.append(text)
-        
-        # Arrange vertically with spacing but ignoring horizontal alignment to keep indentation
-        toc = VGroup(*section_texts).arrange(DOWN, buff=0.7)
-        
-        # Create highlights
-        highlights = VGroup(*[
-            Rectangle(
-                width=text.width + 0.5,
-                height=text.height + 0.2,
-                fill_opacity=0,
-                fill_color=YELLOW,
-                stroke_width=0
-            ).move_to(text)
-            for text in section_texts
-        ])
-        
-        # Group highlights and text side by side
-        grouped = VGroup(*[
-            VGroup(rect, text) for rect, text in zip(highlights, section_texts)
-        ]).arrange(DOWN, buff=0.7)
+        font_size = 25
+        intro = MarkupText("- መእተዊ", font_size=font_size, font="Nyala")
+        proposition = MarkupText("- ሓሳብ", font_size=font_size, font="Nyala", color='#FFFFF0')
+        prop_types = MarkupText("- ዓይነታት", font_size=font_size, font="Nyala")
+        prop_connectives = MarkupText("- መጣመርቲ", font_size=font_size, font="Nyala")
+        negation = MarkupText("- ኣሉታ", font_size=font_size, font="Nyala")
+        disjunction = MarkupText("- ፍልያ", font_size=font_size, font="Nyala")
+        conjunction = MarkupText("- መስተጻምር", font_size=font_size, font="Nyala")
+        implication = MarkupText("- ኣገዳስነት", font_size=font_size, font="Nyala")
+        biimplication = MarkupText("- ክልተ-ኣገዳስነት", font_size=font_size, font="Nyala")
+        converse = MarkupText("- ኣንጻር፣ ተገላባጢ፣ ተጻራሪ ኣወንታዊ", font_size=font_size, font="Nyala",color='#FFFFF0')
+        tautology = MarkupText("- ህውላለን ግርጭትን", font_size=font_size, font="Nyala", color='#FFFFF0')
+        logical_equiv = MarkupText("- መጎታዊ ማዕርነት", font_size=font_size, font="Nyala", color='#FFFFF0')
 
-        self.add(grouped)
-        
-        # Animate highlight for each line sequentially
-        for i in range(len(section_texts)):
-            self.play(highlights[i].animate.set_fill(YELLOW, opacity=0.5), run_time=1)
-            self.wait(1)
-            if i < len(section_texts) - 1:
-                self.play(highlights[i].animate.set_fill(YELLOW, opacity=0), run_time=0.5)
+        intro.move_to(ORIGIN + UP*3.1 + LEFT*4)
+        proposition.next_to(intro, DOWN, buff=0.3).align_to(intro, LEFT)
+        prop_types.next_to(proposition, DOWN, buff=0.3).shift(RIGHT*0.8)
+        prop_connectives.next_to(prop_types, DOWN, buff=0.3).align_to(prop_types, LEFT)
+        negation.next_to(prop_connectives, DOWN, buff=0.3).shift(RIGHT*0.8)
+        disjunction.next_to(negation, DOWN, buff=0.3).align_to(negation, LEFT)
+        conjunction.next_to(disjunction, DOWN, buff=0.3).align_to(negation, LEFT)
+        implication.next_to(conjunction, DOWN, buff=0.3).align_to(negation, LEFT)
+        biimplication.next_to(implication, DOWN, buff=0.3).align_to(negation, LEFT)
+        converse.next_to(biimplication, DOWN, buff=0.3).align_to(negation, LEFT)
+        tautology.next_to(converse, DOWN, buff=0.3).align_to(intro, LEFT)
+        logical_equiv.next_to(tautology, DOWN, buff=0.3).align_to(intro, LEFT)
 
+        toc_group = VGroup(
+            intro, proposition,
+            prop_types, prop_connectives,
+            negation, disjunction, conjunction,
+            implication, biimplication, converse,
+            tautology, logical_equiv
+        )
+        self.add(toc_group)
         self.wait(2)
+        #  sections = [
+        #     (0, "Introduction"),
+        #     (0, "Proposition"),
+        #     (1, "Proposition Types"),
+        #     (1, "Propositional Connectives"),
+        #     (2, "Negation"),
+        #     (2, "Disjunction"),
+        #     (2, "Conjunction"),
+        #     (2, "Implication"),
+        #     (2, "Bi-Implication"),
+        #     (2, "Converse, Inverse, and Contra Positive"),
+        #     (0, "Tautology and Contradiction"),
+        #     (0, "Logical Equivalence")         
+           
+        # ]
 
  class SetColumnColorsExample(Scene):
     def construct(self):
