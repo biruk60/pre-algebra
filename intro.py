@@ -38,36 +38,36 @@ class IntroScene(ThreeDScene):
             t_range=[-2 * PI, 2 * PI],
             color='#EDC001',
         )
-        self.play(GrowFromPoint(axes, ORIGIN),runt_time=1)
-        self.play(Create(graph), run_time=2)
+        self.play(GrowFromPoint(axes, ORIGIN),runt_time=.5)
+        self.play(Create(graph), run_time=.5)
         # self.play(FadeIn(axes, runt_time=1), FadeIn(graph, run_time=2))
-        self.wait()
+        self.wait(.5)
 
         ##THE CAMERA IS AUTO SET TO PHI = 0 and THETA = -90
 
         self.move_camera(phi=60 * DEGREES)
-        self.wait()
+        self.wait(.5)
         self.move_camera(theta=-45 * DEGREES)
 
         self.begin_ambient_camera_rotation(
             rate=PI / 10, about="theta"
         )  # Rotates at a rate of radians per second
-        self.wait()
+        self.wait(.5)
         self.play(Create(rects), run_time=3)
         self.play(Create(graph2))
-        self.wait()
+        self.wait(.5)
         self.stop_ambient_camera_rotation()
 
-        self.wait()
+        self.wait(.5)
         self.begin_ambient_camera_rotation(
             rate=PI / 10, about="phi"
         )  # Rotates at a rate of radians per second
-        self.wait(1) 
+        self.wait(.5) 
         self.stop_ambient_camera_rotation()
-        self.wait(2)
+        self.wait(.5)
         what = VGroup(axes, graph, graph2, rects)
         self.play(ShrinkToCenter(what))
-        self.wait()
+        self.wait(.5)
         # Heights and widths for better control
         height = 2
         widths = [0.8, 0.7, 0.8]
@@ -110,24 +110,24 @@ class IntroScene(ThreeDScene):
         intro_text.next_to(columns, DOWN, buff=0.3)
         self.add_fixed_in_frame_mobjects(intro_text)
     
-        self.play(Write(intro_text), run_time=.5)
+        self.play(Write(intro_text), run_time=.25)
         
         intro_text.save_state()
         columns.save_state()
         matrix = [[1, 1], [0, 2/3]]
         self.play(ApplyMatrix(matrix, intro_text), ApplyMatrix(matrix, columns))
         self.wait(.5)
-        self.play(Restore(intro_text),Restore(columns), run_time=.5)
+        self.play(Restore(intro_text),Restore(columns), run_time=.25)
         
 
         self.play(Unwrite(intro_text))
-        self.wait()
+        self.wait(.5)
         self.play(ReplacementTransform(col1[0], col1[1]),ReplacementTransform(col1[1], col1[2]))
         self.play(ReplacementTransform(col2[0], col2[1]),ReplacementTransform(col2[1], col2[2]))
         self.play(ReplacementTransform(col3[0], col3[1]),ReplacementTransform(col3[1], col3[2]))
         self.play(ReplacementTransform(col1, col2))
         self.play(ReplacementTransform(col2, col3))
         self.play(FadeOut(columns))
-        self.wait()
+        self.wait(.5)
         
         # manim -ql -p --disable_caching  -o intro_video.mp4 .\intro.py IntroScene
