@@ -2,46 +2,55 @@
 from manim import * 
 import manimpango
 
+
+def layout()->[mobject.types.image_mobject.ImageMobject, mobject.text.text_mobject.Text]:
+    background = ImageMobject("assets/images/blackboard.png").set_opacity(.8)
+    manimpango.register_font("assets/fonts/nyala_regular.ttf")
+    background.scale_to_fit_width(config.frame_width)
+    background.scale_to_fit_height(config.frame_height)
+    background.set_z_index(-10)  # Keep behind everything
+    bg_text = Text("@BK_BROOK", fill_opacity=0.025).scale(3)
+    bg_text.set_z_index(-9)  # Keep behind everything
+    return background, bg_text 
+        
+    
+
 class TableOfContents(Scene):
     def construct(self):
-        background = ImageMobject("assets/images/blackboard.png")
-        
-        # Scale the image to fit the height of the scene (approx 8 units)
-        background.scale_to_fit_height(config.frame_height)
-        
-        # Move it to the center and push it back behind other mobjects
-        background.move_to(ORIGIN).set_z_index(-1)
-        
-        # Add background
-        self.add(background)
-        manimpango.register_font("assets/fonts/Nyala Regular.ttf")
-        self.wait()
-        font_size = 25
-        intro = MarkupText("- መእተዊ", font_size=font_size, font="Nyala")
-        proposition = MarkupText("- ሓሳብ", font_size=font_size, font="Nyala", color='#FFFFF0')
-        prop_types = MarkupText("- ዓይነታት", font_size=font_size, font="Nyala")
-        prop_connectives = MarkupText("- መጣመርቲ", font_size=font_size, font="Nyala")
-        negation = MarkupText("- ኣሉታ", font_size=font_size, font="Nyala")
-        disjunction = MarkupText("- ፍልያ", font_size=font_size, font="Nyala")
-        conjunction = MarkupText("- መስተጻምር", font_size=font_size, font="Nyala")
-        implication = MarkupText("- ኣገዳስነት", font_size=font_size, font="Nyala")
-        biimplication = MarkupText("- ክልተ-ኣገዳስነት", font_size=font_size, font="Nyala")
-        converse = MarkupText("- ኣንጻር፣ ተገላባጢ፣ ተጻራሪ ኣወንታዊ", font_size=font_size, font="Nyala",color='#FFFFF0')
-        tautology = MarkupText("- ህውላለን ግርጭትን", font_size=font_size, font="Nyala", color='#FFFFF0')
-        logical_equiv = MarkupText("- መጎታዊ ማዕርነት", font_size=font_size, font="Nyala", color='#FFFFF0')
+        background, bg_text = layout()
+        self.add(background)   
 
-        intro.move_to(ORIGIN + UP*3.1 + LEFT*4)
-        proposition.next_to(intro, DOWN, buff=0.3).align_to(intro, LEFT)
-        prop_types.next_to(proposition, DOWN, buff=0.3).shift(RIGHT*0.8)
-        prop_connectives.next_to(prop_types, DOWN, buff=0.3).align_to(prop_types, LEFT)
-        negation.next_to(prop_connectives, DOWN, buff=0.3).shift(RIGHT*0.8)
-        disjunction.next_to(negation, DOWN, buff=0.3).align_to(negation, LEFT)
-        conjunction.next_to(disjunction, DOWN, buff=0.3).align_to(negation, LEFT)
-        implication.next_to(conjunction, DOWN, buff=0.3).align_to(negation, LEFT)
-        biimplication.next_to(implication, DOWN, buff=0.3).align_to(negation, LEFT)
-        converse.next_to(biimplication, DOWN, buff=0.3).align_to(negation, LEFT)
-        tautology.next_to(converse, DOWN, buff=0.3).align_to(intro, LEFT)
-        logical_equiv.next_to(tautology, DOWN, buff=0.3).align_to(intro, LEFT)
+        # Add text as a fixed background element
+        self.add(bg_text)
+        self.wait()
+        font_size = 23
+        buff=0.275       
+        title = MarkupText("ትሕዝቶታት ናይ'ዚ ቪድዮ \n",font="Nyala", font_size=45).to_edge(UP) 
+        intro = MarkupText("1 መእተዊ", font_size=font_size, font="Nyala")
+        proposition = MarkupText("2 ሓሳብ", font_size=font_size, font="Nyala")
+        prop_types = MarkupText("2.1 ዓይነታት", font_size=font_size, font="Nyala")
+        prop_connectives = MarkupText("2.2 መጣመርቲ", font_size=font_size, font="Nyala")
+        negation = MarkupText("2.2.1 ኣሉታ", font_size=font_size, font="Nyala")
+        disjunction = MarkupText("2.2.2 ፍልያ", font_size=font_size, font="Nyala")
+        conjunction = MarkupText("2.2.3 መስተጻምር", font_size=font_size, font="Nyala")
+        implication = MarkupText("2.2.4 ኣገዳስነት", font_size=font_size, font="Nyala")
+        biimplication = MarkupText("2.2.5 ክልተ-ኣገዳስነት", font_size=font_size, font="Nyala")
+        converse = MarkupText("2.2.6 ኣንጻር፣ ተገላባጢ፣ ተጻራሪ ኣወንታዊ", font_size=font_size, font="Nyala")
+        tautology = MarkupText("3 ህውላለን ግርጭትን", font_size=font_size, font="Nyala")
+        logical_equiv = MarkupText("4 መጎታዊ ማዕርነት", font_size=font_size, font="Nyala")
+
+        intro.move_to(ORIGIN + UP*2 + LEFT*4)
+        proposition.next_to(intro, DOWN, buff=buff).align_to(intro, LEFT)
+        prop_types.next_to(proposition, DOWN, buff=buff).shift(RIGHT*0.8)
+        prop_connectives.next_to(prop_types, DOWN, buff=buff).align_to(prop_types, LEFT)
+        negation.next_to(prop_connectives, DOWN, buff=buff).shift(RIGHT*0.8)
+        disjunction.next_to(negation, DOWN, buff=buff).align_to(negation, LEFT)
+        conjunction.next_to(disjunction, DOWN, buff=buff).align_to(negation, LEFT)
+        implication.next_to(conjunction, DOWN, buff=buff).align_to(negation, LEFT)
+        biimplication.next_to(implication, DOWN, buff=buff).align_to(negation, LEFT)
+        converse.next_to(biimplication, DOWN, buff=buff).align_to(negation, LEFT)
+        tautology.next_to(converse, DOWN, buff=buff).align_to(intro, LEFT)
+        logical_equiv.next_to(tautology, DOWN, buff=buff).align_to(intro, LEFT)
 
         toc_group = VGroup(
             intro, proposition,
@@ -50,8 +59,17 @@ class TableOfContents(Scene):
             implication, biimplication, converse,
             tautology, logical_equiv
         )
-        self.add(toc_group)
-        self.wait(2)
+        self.play(Write(title), run_time=.5)
+        line = Line(5*LEFT, 5*RIGHT, color=[YELLOW, BLUE]).next_to(title, DOWN,buff=buff)
+        self.play(Create(line))
+        self.play(Write(toc_group), run_time=4)
+        self.wait(4)
+        for element in toc_group:
+            shade = SurroundingRectangle(element, color=YELLOW, buff=.15)
+            self.add(shade)
+            self.bring_to_front(element)
+            self.wait(0.5)
+            self.remove(shade)
         #  sections = [
         #     (0, "Introduction"),
         #     (0, "Proposition"),
