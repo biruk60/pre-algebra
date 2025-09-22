@@ -134,7 +134,53 @@ class TableOfContents(Scene):
         self.play(ReplacementTransform(row1, row2), run_time=1)
         self.wait()
         
-       
+"""
+Axiom and Axiomatic system.
+********************************
+An axiom in mathematics is a statement assumed to be true without proof, serving as a foundational building block for further reasoning and deduction. An axiomatic system is a structured framework consisting of a set of axioms from which mathematicians can derive theorems using logical reasoning. 
+
+Key Properties of Axiomatic Systems
+Consistency: The system does not lead to contradictions; no statement and its opposite can both be deduced.
+
+Independence: Every axiom cannot be proven from the others; each adds unique information.
+
+Completeness: Every statement expressible in the system can be proven true or false within it (though Gödel’s incompleteness theorem shows that some systems cannot be complete).
+
+Famous examples include Euclid’s Elements (geometry), Peano axioms (arithmetic), Zermelo-Fraenkel axioms (set theory), and Kolmogorov’s probability axioms.
+
+
+Abstraction 
+************
+Abstraction is the process of distilling complex ideas into simpler, more general concepts by focusing on essential properties and removing unnecessary details. In mathematics and logic, it involves extracting underlying structures, patterns, or properties of concepts, independent of specific contexts or physical examples, allowing these ideas to be generalized and applied broadly to different cases .
+
+In logic and mathematics, abstraction is useful because it enables:
+
+Identification of common patterns across diverse specific instances.
+
+Creation of general theories and models applicable in many situations.
+
+Simplification of complex problems by focusing on core properties rather than incidental details.
+
+Enhanced logical reasoning by concentrating on essential relationships and properties.
+
+Flexibility to work with symbolic representations that stand for whole classes of objects or concepts rather than individual cases .
+
+Thus, abstraction is foundational for axiomatic systems since it allows mathematics to move beyond empirical notions and base itself on formal logical structures that define objects & truths from first principles
+
+
+Logic: Its Etymology and History 
+**********************************
+Its history traces back to ancient civilizations, with notable early developments in India, China, and Greece. The discipline became systematic in ancient Greece, especially through Aristotle's work in the 4th century BCE, who is regarded as the first formal logician. Aristotle developed the theory of syllogism and laid the foundations of what is called Aristotelian or term logic.
+
+History of Logic
+Ancient logic began with Aristotle, who constructed a system of syllogistic reasoning based on categorical terms and propositions, as documented in his works called the Organon.
+
+Medieval philosophers extended Aristotle’s work but mostly kept the traditional term logic framework.
+
+In the 19th century, figures like George Boole, Gottlob Frege, and Bertrand Russell pioneered symbolic logic, transforming logic into a rigorous mathematical discipline.
+
+This modern symbolic logic focuses on propositional and predicate calculus, involving symbols for logical connectives and quantifiers, emphasizing form and formal proof.
+"""    
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
