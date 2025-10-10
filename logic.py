@@ -180,7 +180,182 @@ Medieval philosophers extended Aristotle’s work but mostly kept the traditiona
 In the 19th century, figures like George Boole, Gottlob Frege, and Bertrand Russell pioneered symbolic logic, transforming logic into a rigorous mathematical discipline.
 
 This modern symbolic logic focuses on propositional and predicate calculus, involving symbols for logical connectives and quantifiers, emphasizing form and formal proof.
-"""    
+"""  
+
+class Introduction(Scene):
+    def construct(self):
+        background, bg_text = layout()
+        self.add(background)  
+
+        # Add text as a fixed background element
+        self.add(bg_text)
+        self.wait()
+        font_title_size= 45
+        font_regular_size = 23
+        
+        buff=0.275   
+        title = MarkupText(" መእተዊ \n",font="Nyala", font_size=font_title_size).to_edge(UP)
+        self.play(Write(title), run_time=.5)
+        line = Line(5*LEFT, 5*RIGHT, color=[YELLOW, BLUE]).next_to(title, DOWN,buff=buff)
+        self.play(Create(line))
+        ### Axiom
+        axiom = MarkupText("ግሁድ \n",font="Nyala", font_size=font_regular_size).next_to(line, 2*DOWN,buff=buff)
+        self.play(Write(axiom))
+        self.wait()
+        item1 = MarkupText("ብዘይ መረጋገጺ ከምሓቂ ዝውሰድ ሓሳብ",font="Nyala", font_size=font_title_size)
+        item2 =  MarkupText("ባዕሉ ንባዕሉ ዘይጓነፅ",font="Nyala", font_size=font_title_size)
+        item3 = MarkupText("ዓርሱ ዝኻኣለ",font="Nyala", font_size=font_title_size)
+        item4 = MarkupText("ሙሉእነት ዘለዎ",font="Nyala", font_size=font_title_size)
+    
+        # Create bullet points as simple Text or Dot mobjects
+        bullet1 = Text('•', font_size=font_title_size)
+        bullet2 = Text('•', font_size=font_title_size)
+        bullet3 = Text('•', font_size=font_title_size)
+        bullet4 = Text('•', font_size=font_title_size)
+        list_items = VGroup(
+            VGroup(bullet1, item1).arrange(RIGHT, buff=0.2),
+            VGroup(bullet2, item2).arrange(RIGHT, buff=0.2),
+            VGroup(bullet3, item3).arrange(RIGHT, buff=0.2),
+            VGroup(bullet4, item4).arrange(RIGHT, buff=0.2)
+        ).arrange(DOWN, aligned_edge=LEFT)
+
+        for row in list_items:
+            self.play(Write(row))
+            self.wait(.5)
+        self.wait()
+        self.play(FadeOut(axiom), FadeOut(list_items), run_time=1)
+        self.wait(1)
+        # Abstraction in action 
+        img_1 = "assets/woman-brushing-teeth-svgrepo-com.svg" 
+        img_2 = "assets/woman-doing-gymnastics-at-home-svgrepo-com.svg"
+        img_3 = "assets/woman-doing-yoga-meditation-svgrepo-com.svg"
+        img_4 = "assets/woman-getting-up-svgrepo-com.svg"
+        img_5 = "assets/woman-shopping-svgrepo-com.svg"
+        image_files = [
+            img_1,
+            img_2,
+            img_3,
+            img_4,
+            img_5 ,
+        ]
+        # 2. Create an empty VGroup to hold the images.
+        images_group = VGroup()
+        group1 = VGroup()
+        group2 = VGroup()
+        group3 = VGroup()
+        group1.add(SVGMobject(img_1))
+        group1.add(SVGMobject(img_2))
+        
+        group2.add(SVGMobject(img_3))
+        group2.add(SVGMobject(img_4))
+        
+        group3.add(SVGMobject(img_5))
+        
+        title1 = MarkupText(" ብምድሪ መጓዓዝያ",font="Nyala", font_size=font_title_size).next_to(group1, UP)
+        title2 = MarkupText(" ብባሓሪ መጓዓዝያ",font="Nyala", font_size=font_title_size).next_to(group2, UP)
+        title3 = MarkupText(" ብኣየር መጓዓዝያ",font="Nyala", font_size=font_title_size).next_to(group3, UP)
+        transport = MarkupText("መጓዓዝያ",font="Nyala", font_size=font_title_size).move_to(ORIGIN)
+        letter_x = MarkupText("ሀ",font="Nyala", font_size=font_title_size).move_to(ORIGIN)
+
+        final_group1 = VGroup(title1, group1)
+        final_group2 = VGroup(title2, group2)
+        final_group3 = VGroup(title3, group3)
+        
+        side_length = 8
+        height = side_length * np.sqrt(3) / 2
+        
+        # Calculate the vertex coordinates relative to the scene's center.
+        # Top vertex
+        top_pos = np.array([0, height / 2, 0])
+        # Bottom-left vertex
+        bottom_left_pos = np.array([-side_length / 2, -height / 2, 0])
+        # Bottom-right vertex
+        bottom_right_pos = np.array([side_length / 2, -height / 2, 0])
+        
+        final_group1.move_to(top_pos)
+        final_group2.move_to(bottom_left_pos)
+        final_group3.move_to(bottom_right_pos)
+        all_groups = VGroup(final_group1, final_group2, final_group3).arrange(buff=1)
+        # 3. Use a loop to create and position each ImageMobject randomly.
+        for image_file in image_files:
+            # Create an ImageMobject from the file.
+            img = SVGMobject(image_file)
+
+            # Get the size of the screen.
+            frame_height = self.camera.frame_height # type: ignore
+            frame_width = self.camera.frame_width # type: ignore
+
+            # Generate random x and y coordinates within the screen bounds.
+            # `np.random.uniform(low, high)` is perfect for this.
+            # Adjust the range to prevent images from spawning partially off-screen.
+            random_x = np.random.uniform(-frame_width/2 + img.width/2, frame_width/2 - img.width/2) # type: ignore
+            random_y = np.random.uniform(-frame_height/2 + img.height/2, frame_height/2 - img.height/2) # type: ignore
+            
+            # Set the image's position to the random coordinates.
+            img.move_to(random_x * RIGHT + random_y * UP)
+            
+            # You can also apply other random properties, like scale and rotation.
+            # img.scale(np.random.uniform(0.5, 1.5))
+            # img.rotate(np.random.uniform(0, 2 * PI))
+
+            # Add the image to the group.
+            images_group.add(img)
+            
+        self.play(FadeIn(images_group), run_time=1)
+        self.wait(1)
+        
+        self.play(
+            ReplacementTransform(images_group[0], final_group1.submobjects[1][0]),
+            ReplacementTransform(images_group[1], final_group1.submobjects[1][1]),
+            ReplacementTransform(images_group[2], final_group2.submobjects[1][0]),
+            ReplacementTransform(images_group[3], final_group2.submobjects[1][1]),
+            ReplacementTransform(images_group[4], final_group3.submobjects[1][0]),
+            Write(title1),
+            Write(title2),
+            Write(title3),
+            
+            run_time=2
+        )
+        # self.play(FadeOut(images_group))
+        self.wait(1)
+        self.play(ReplacementTransform(all_groups, transport), run_time=1.5)
+        self.wait(1)
+        # self.play(FadeOut(all_groups))
+        self.play(ReplacementTransform(transport, letter_x), run_time=1.5)
+        self.wait(1)
+        # self.play(FadeOut(transport))
+        self.play(FadeOut(letter_x), run_time=1)
+        self.wait(1)
+        
+        
+        ### Abstraction
+        abstraction = MarkupText("ኣርቅቆ \n",font="Nyala", font_size=font_regular_size).next_to(line, 2*DOWN,buff=buff)
+        self.play(Write(abstraction))
+        self.wait()
+        item1 = MarkupText("መለለዪ ሓባራዊ ቅዲ",font="Nyala", font_size=font_title_size)
+        item2 =  MarkupText("ሓፈሻዊ ክልሰ-ሓሳብ ንምፍጣር",font="Nyala", font_size=font_title_size)
+        item3 = MarkupText("ዝተሓላለኸ ሓሳብ ንምቕላል",font="Nyala", font_size=font_title_size)
+        item4 = MarkupText("ሓሳባት ብምስሊ ንምውካል",font="Nyala", font_size=font_title_size)
+    
+        # Create bullet points as simple Text or Dot mobjects
+        bullet1 = Text('•', font_size=font_title_size)
+        bullet2 = Text('•', font_size=font_title_size)
+        bullet3 = Text('•', font_size=font_title_size)
+        bullet4 = Text('•', font_size=font_title_size)
+        list_items = VGroup(
+            VGroup(bullet1, item1).arrange(RIGHT, buff=0.2),
+            VGroup(bullet2, item2).arrange(RIGHT, buff=0.2),
+            VGroup(bullet3, item3).arrange(RIGHT, buff=0.2),
+            VGroup(bullet4, item4).arrange(RIGHT, buff=0.2)
+        ).arrange(DOWN, aligned_edge=LEFT)
+
+        for row in list_items:
+            self.play(Write(row))
+            self.wait(.5)
+        self.wait()
+        self.play(FadeOut(abstraction), FadeOut(list_items), run_time=1)
+        self.wait(1)
+        
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
