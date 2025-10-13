@@ -194,25 +194,25 @@ class Introduction(Scene):
         font_regular_size = 23
         
         buff=0.275   
-        
+      
         title = MarkupText(" መእተዊ \n",font="Nyala", font_size=font_title_size).to_edge(UP)
         self.play(Write(title), run_time=.5)
         line = Line(5*LEFT, 5*RIGHT, color=[YELLOW, BLUE]).next_to(title, DOWN,buff=buff)
         self.play(Create(line))
         ### Axiom
-        axiom = MarkupText("ግሁድ \n",font="Nyala", font_size=font_regular_size).next_to(line, 2*DOWN,buff=buff)
+        axiom = MarkupText("ግሁድ \n",font="Nyala", font_size=40).next_to(line, 2*DOWN,buff=buff)
         self.play(Write(axiom))
         self.wait()
-        item1 = MarkupText("ብዘይ መረጋገጺ ከምሓቂ ዝውሰድ ሓሳብ",font="Nyala", font_size=font_title_size)
-        item2 =  MarkupText("ባዕሉ ንባዕሉ ዘይጓነፅ",font="Nyala", font_size=font_title_size)
-        item3 = MarkupText("ዓርሱ ዝኻኣለ",font="Nyala", font_size=font_title_size)
-        item4 = MarkupText("ሙሉእነት ዘለዎ",font="Nyala", font_size=font_title_size)
+        item1 = MarkupText("ብዘይ መረጋገጺ ከምሓቂ ዝውሰድ ሓሳብ",font="Nyala", font_size=font_regular_size)
+        item2 =  MarkupText("ባዕሉ ንባዕሉ ዘይጓነፅ",font="Nyala", font_size=font_regular_size)
+        item3 = MarkupText("ዓርሱ ዝኻኣለ",font="Nyala", font_size=font_regular_size)
+        item4 = MarkupText("ሙሉእነት ዘለዎ",font="Nyala", font_size=font_regular_size)
     
         # Create bullet points as simple Text or Dot mobjects
-        bullet1 = Text('•', font_size=font_title_size)
-        bullet2 = Text('•', font_size=font_title_size)
-        bullet3 = Text('•', font_size=font_title_size)
-        bullet4 = Text('•', font_size=font_title_size)
+        bullet1 = Text('•', font_size=font_regular_size)
+        bullet2 = Text('•', font_size=font_regular_size)
+        bullet3 = Text('•', font_size=font_regular_size)
+        bullet4 = Text('•', font_size=font_regular_size)
         list_items = VGroup(
             VGroup(bullet1, item1).arrange(RIGHT, buff=0.2),
             VGroup(bullet2, item2).arrange(RIGHT, buff=0.2),
@@ -226,7 +226,7 @@ class Introduction(Scene):
         self.wait()
         self.play(FadeOut(axiom), FadeOut(list_items), run_time=1)
         self.wait(1)
-       
+        
         scale = .40
         # Abstraction in action 
         img_1 = SVGMobject("assets/svgs/airplane.svg").scale(scale) 
@@ -257,7 +257,17 @@ class Introduction(Scene):
         img_22 = SVGMobject("assets/svgs/train.svg").scale(scale)
         img_23 = SVGMobject("assets/svgs/tricycle.svg").scale(scale)
         img_24 = SVGMobject("assets/svgs/truck.svg").scale(scale)
-      
+
+        img_0 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_01 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_02 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_03 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_04 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_05 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_06 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_07 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        img_08 = SVGMobject("assets/svgs/place-holder.svg").scale(scale).set_opacity(0)
+        
        
         
         svgs = [img_1, img_2, img_3, img_4, img_5, img_6,
@@ -270,10 +280,10 @@ class Introduction(Scene):
         images_group = VGroup(*svgs)
         
         # Arrange in a grid: 4 rows, 6 columns
-        images_group.arrange_in_grid(rows=4, cols=6, buff=0.3)  # adjust buff for spacing       
+        images_group.arrange_in_grid(rows=4, cols=6, buff=0.3).next_to(line, 2*DOWN,buff=buff)  # adjust buff for spacing       
         self.play(FadeIn(images_group), run_time=1)
         self.wait(1)
-        
+       
         
         # 2. Create an empty VGroup to hold the images.
         
@@ -314,6 +324,7 @@ class Introduction(Scene):
         civil_plane.add(img_1)
         civil_plane.add(img_10)
         civil_plane.add(img_15)
+        civil_plane.add(img_0)
         civil_plane.arrange(DOWN, buff=.5)
         civil_plane_title = MarkupText(" ናይ ገያሻይ ነፈርቲ",font="Nyala", font_size=16).next_to(civil_plane, UP)
         civil_plane_group = VGroup(civil_plane_title, civil_plane)
@@ -321,6 +332,7 @@ class Introduction(Scene):
         military_plane.add(img_6)
         military_plane.add(img_9)
         military_plane.add(img_11)
+        military_plane.add(img_01)
         military_plane.arrange(DOWN, buff=.5)
         military_plane_title = MarkupText(" ወታህደራዊ ነፈርቲ",font="Nyala", font_size=16).next_to(military_plane, UP)
         military_plane_group = VGroup(military_plane_title, military_plane)
@@ -328,24 +340,72 @@ class Introduction(Scene):
         passanger_ship.add(img_3)
         passanger_ship.add(img_18)
         passanger_ship.add(img_19)
+        passanger_ship.add(img_02)
         passanger_ship.arrange(DOWN, buff=.5)
         passanger_ship_title = MarkupText(" ናይ ገያሻይ መርከብ",font="Nyala", font_size=16).next_to(passanger_ship, UP)
         passanger_ship_group = VGroup(passanger_ship_title, passanger_ship)
 
         cargo_ship.add(img_8)
+        cargo_ship.add(img_03)
+        cargo_ship.add(img_04)
+        cargo_ship.add(img_05)
         cargo_ship.arrange(DOWN, buff=.5)
         cargo_ship_title = MarkupText(" ናይ ፅዕነት መርከብ",font="Nyala", font_size=16).next_to(cargo_ship, UP)
         cargo_ship_group = VGroup(cargo_ship_title, cargo_ship)
 
         military_ship.add(img_20)
+        military_ship.add(img_06)
+        military_ship.add(img_07)
+        military_ship.add(img_08)
         military_ship.arrange(DOWN, buff=.5)
         military_ship_title = MarkupText(" ወታህደራዊ መርከብ",font="Nyala", font_size=16).next_to(military_ship, UP)
         military_ship_group = VGroup(military_ship_title, military_ship)
 
-        all_groups = VGroup(cycle_group,car_group,train_group,
-                            civil_plane_group,military_plane_group,
-                            passanger_ship_group,cargo_ship_group,military_ship_group).arrange_in_grid(rows=4, cols=8, buff=0.3)
+        cycle_img =SVGMobject("assets/svgs/cycle-group.svg").scale(scale)
+        cycle_img_group_title = MarkupText(" ሳይክል",font="Nyala", font_size=20).next_to(cycle_img, UP)
+        cycle_img_group =VGroup(cycle_img_group_title,cycle_img)
+        
+        car_img= SVGMobject("assets/svgs/car-group.svg").scale(scale)
+        car_img_group_title = MarkupText(" መኪና",font="Nyala", font_size=20).next_to(car_img, UP)
+        car_img_group= VGroup(car_img_group_title, car_img)
+
+        train_img= SVGMobject("assets/svgs/train-group.svg").scale(scale)
+        train_img_group_title = MarkupText(" ባቡር",font="Nyala", font_size=20).next_to(train_img, UP)
+        train_img_group= VGroup(train_img_group_title, train_img )
+
+        plane_img=SVGMobject("assets/svgs/civil-plane-group.svg").scale(scale)
+        plane_img_group_title = MarkupText("ነፋሪት",font="Nyala", font_size=20).next_to(plane_img, UP) 
+        plane_img_group=VGroup(plane_img_group_title,plane_img ) 
+
+        ship_img = SVGMobject("assets/svgs/ship-group.svg").scale(scale)
+        ship_img_group_title = MarkupText("መርከብ",font="Nyala", font_size=20).next_to(ship_img, UP)
+        ship_img_group = VGroup(ship_img_group_title, ship_img)
+
+        ground_img= SVGMobject("assets/svgs/road.svg").scale(scale)
+        ground_transport_title = MarkupText(" ብምድሪ መጓዓዝያ",font="Nyala", font_size=23).next_to(ground_img, UP)
+        ground_transport = VGroup(ground_transport_title, ground_img)        
+        
+        air_img= SVGMobject("assets/svgs/cloud.svg").scale(scale)
+        air_transport_title = MarkupText(" ብኣየር መጓዓዝያ",font="Nyala", font_size=23).next_to(air_img, UP)
+        air_transport = VGroup(air_transport_title, air_img)
+
+        water_img= SVGMobject("assets/svgs/water.svg").scale(scale) 
+        water_transport_title = MarkupText(" ብባሓሪ መጓዓዝያ",font="Nyala", font_size=23).next_to(water_img, UP)         
+        water_transport = VGroup(water_transport_title, water_img )
+
+
+        all_groups = VGroup(cycle_group,
+                            car_group,
+                            train_group,
+                            civil_plane_group,
+                            military_plane_group,
+                            passanger_ship_group,
+                            cargo_ship_group,
+                            military_ship_group,
+                            ).arrange_in_grid(rows=4, cols=8, buff=0.3).next_to(line, 2*DOWN,buff=buff)
+       
         self.play(
+            
             ReplacementTransform(images_group[1], cycle_group.submobjects[1][0]),
             ReplacementTransform(images_group[12], cycle_group.submobjects[1][1]),
             ReplacementTransform(images_group[16], cycle_group.submobjects[1][2]),
@@ -372,6 +432,7 @@ class Introduction(Scene):
             ReplacementTransform(images_group[18], passanger_ship_group.submobjects[1][2]),
             ReplacementTransform(images_group[7], cargo_ship_group.submobjects[1][0]),
             ReplacementTransform(images_group[19], military_ship_group.submobjects[1][0]),
+           
             Write(cycle_title),
             Write(car_title),
             Write(train_title),    
@@ -379,63 +440,21 @@ class Introduction(Scene):
             Write(military_plane_title),
             Write(passanger_ship_title),    
             Write(cargo_ship_title), 
-            Write(military_ship_title),            
+            Write(military_ship_title), 
+                    
             run_time=1
         )
-        self.wait()
         
-        
-        cycle_img =SVGMobject("assets/svgs/cycle-group.svg").scale(scale)
-        cycle_img_group_title = MarkupText(" ሳይክል",font="Nyala", font_size=16).next_to(cycle_img, UP)
-        cycle_img_group =VGroup(cycle_img_group_title,cycle_img)
-        
-        car_img= SVGMobject("assets/svgs/car-group.svg").scale(scale)
-        car_img_group_title = MarkupText(" መኪና",font="Nyala", font_size=16).next_to(car_img, UP)
-        car_img_group= VGroup(car_img_group_title, car_img)
-
-        train_img= SVGMobject("assets/svgs/train-group.svg").scale(scale)
-        train_img_group_title = MarkupText(" ባቡር",font="Nyala", font_size=16).next_to(train_img, UP)
-        train_img_group= VGroup(train_img_group_title, train_img )
-
-        plane_img=SVGMobject("assets/svgs/civil-plane-group.svg").scale(scale)
-        plane_img_group_title = MarkupText("ነፋሪት",font="Nyala", font_size=16).next_to(plane_img, UP) 
-        plane_img_group=VGroup(plane_img_group_title,plane_img ) 
-
-        ship_img = SVGMobject("assets/svgs/ship-group.svg").scale(scale)
-        ship_img_group_title = MarkupText("መርከብ",font="Nyala", font_size=16).next_to(ship_img, UP)
-        ship_img_group = VGroup(ship_img_group_title, ship_img)
-        
-        all_generic_groups = VGroup(cycle_img_group,car_img_group,train_img_group,ship_img_group,plane_img_group,).arrange_in_grid(rows=1, cols=5, buff=0.3)
+        self.wait(1)
+               
+        all_generic_groups = VGroup(cycle_img_group,
+                                    car_img_group,
+                                    train_img_group,
+                                    ship_img_group,
+                                    plane_img_group,
+                                    ).arrange_in_grid(rows=1, cols=5, buff=0.3)
         self.play(
-            ReplacementTransform(cycle_group.submobjects[1][0], cycle_img_group),
-            ReplacementTransform(cycle_group.submobjects[1][1], cycle_img_group),
-            ReplacementTransform(cycle_group.submobjects[1][2], cycle_img_group),
-            ReplacementTransform(cycle_group.submobjects[1][3], cycle_img_group),
-
-            ReplacementTransform(car_group.submobjects[1][0], car_img_group),
-            ReplacementTransform(car_group.submobjects[1][1], car_img_group),
-            ReplacementTransform(car_group.submobjects[1][2], car_img_group),
-            ReplacementTransform(car_group.submobjects[1][3], car_img_group),
-
-            ReplacementTransform(train_group.submobjects[1][0], train_img_group),
-            ReplacementTransform(train_group.submobjects[1][1], train_img_group),
-            ReplacementTransform(train_group.submobjects[1][2], train_img_group),
-            ReplacementTransform(train_group.submobjects[1][3], train_img_group),            
-
-            ReplacementTransform(passanger_ship_group.submobjects[1][0], ship_img_group),
-            ReplacementTransform(passanger_ship_group.submobjects[1][1], ship_img_group),
-            ReplacementTransform(passanger_ship_group.submobjects[1][2], ship_img_group),
-
-            ReplacementTransform(cargo_ship_group.submobjects[1][0], ship_img_group),
-            ReplacementTransform(military_ship_group.submobjects[1][0], ship_img_group), 
-
-            ReplacementTransform(civil_plane_group.submobjects[1][0], plane_img_group),
-            ReplacementTransform(civil_plane_group.submobjects[1][1], plane_img_group),
-            ReplacementTransform(civil_plane_group.submobjects[1][2], plane_img_group),
-
-            ReplacementTransform(military_plane_group.submobjects[1][0], plane_img_group),
-            ReplacementTransform(military_plane_group.submobjects[1][1], plane_img_group),
-            ReplacementTransform(military_plane_group.submobjects[1][2], plane_img_group),  
+            ReplacementTransform(all_groups, all_generic_groups),  
             FadeOut(cycle_title),
             FadeOut(car_title),
             FadeOut(train_title),    
@@ -443,80 +462,69 @@ class Introduction(Scene):
             FadeOut(military_plane_title),
             FadeOut(passanger_ship_title),    
             FadeOut(cargo_ship_title), 
-            FadeOut(military_ship_title), 
+            FadeOut(military_ship_title),             
             Write(cycle_img_group_title),
             Write(car_img_group_title),
             Write(train_img_group_title),    
             Write(plane_img_group_title), 
             Write(ship_img_group_title),          
-                    
             run_time=1
-        )
-       
+        )       
         
-        self.wait()
-        ground_img= SVGMobject("assets/svgs/road.svg").scale(scale)
-        ground_transport_title = MarkupText(" ብምድሪ መጓዓዝያ",font="Nyala", font_size=16).next_to(ground_img, UP)
-        ground_transport = VGroup(ground_transport_title, ground_img)        
+        self.wait(1)
+        all_transportation_groups = VGroup(ground_transport,
+                                           air_transport,
+                                           water_transport,
+                                           ).arrange_in_grid(rows=1, cols=3, buff=0.5)
         
-        air_img= SVGMobject("assets/svgs/cloud.svg").scale(scale)
-        air_transport_title = MarkupText(" ብኣየር መጓዓዝያ",font="Nyala", font_size=16).next_to(air_img, UP)
-        air_transport = VGroup(air_transport_title, air_img)
-
-        water_img= SVGMobject("assets/svgs/water.svg").scale(scale) 
-        water_transport_title = MarkupText(" ብባሓሪ መጓዓዝያ",font="Nyala", font_size=16).next_to(water_img, UP)         
-        water_transport = VGroup(water_transport_title, water_img )
-
-
-        all_transportation_groups = VGroup(ground_transport,air_transport,water_transport).arrange_in_grid(rows=1, cols=3, buff=0.5)
-        
-        self.play(
-            ReplacementTransform(cycle_img_group, ground_transport),
-            ReplacementTransform(car_img_group, ground_transport),
-            ReplacementTransform(train_img_group, ground_transport),
-            ReplacementTransform(plane_img_group, air_transport),
-            ReplacementTransform(ship_img_group, water_transport),
+        self.play(           
+            ReplacementTransform(all_generic_groups, all_transportation_groups),  
             FadeOut(cycle_img_group_title),
             FadeOut(car_img_group_title),
             FadeOut(train_img_group_title),    
             FadeOut(plane_img_group_title), 
-            FadeOut(ship_img_group_title), 
-           
+            FadeOut(ship_img_group_title),  
+
             Write(ground_transport_title),            
             Write(air_transport_title),   
             Write(water_transport_title),  
             
             run_time=1
         )
-        self.wait()
-        self.play(FadeOut(plane_img_group, plane_img, plane_img_group_title))
         self.wait(1)
-        # transport = MarkupText("መጓዓዝያ",font="Nyala", font_size=font_title_size).move_to(ORIGIN)
-        # letter_x = MarkupText("ሀ",font="Nyala", font_size=font_title_size).move_to(ORIGIN)
-        # self.play(FadeIn(transport), run_time=.5)
-        # self.wait(1)
         
-       
-        # self.wait(1)
-        # self.play(FadeOut(letter_x), run_time=1)
-        # self.wait(1)
-      
+        transport_title = MarkupText("መጓዓዝያ",font="Nyala", font_size=40)
+        letter_a_title = MarkupText(" ሀ ",font="Nyala", font_size=40)
+        transport = VGroup(transport_title).move_to(ORIGIN)
+        self.play(ReplacementTransform(all_transportation_groups, transport), run_time=1)
+        self.wait()
+        self.play(Unwrite(transport_title), FadeOut(transport), run_time=1)
+        self.remove(transport_title)
+        self.remove(transport)
+
+        self.wait()
+        self.play( Write(letter_a_title), run_time=.5)
         
-       
+                        
+        self.play(FadeOut(letter_a_title), run_time=1)
+        
+        self.wait()
+        
+        
         ### Abstraction
-        abstraction = MarkupText("ኣርቅቆ \n",font="Nyala", font_size=font_regular_size).next_to(line, 2*DOWN,buff=buff)
+        abstraction = MarkupText("ኣርቅቆ \n",font="Nyala", font_size=font_title_size).next_to(line, 2*DOWN,buff=buff)
         self.play(Write(abstraction))
         self.wait()
-        item1 = MarkupText("መለለዪ ሓባራዊ ቅዲ",font="Nyala", font_size=font_title_size)
-        item2 =  MarkupText("ሓፈሻዊ ክልሰ-ሓሳብ ንምፍጣር",font="Nyala", font_size=font_title_size)
-        item3 = MarkupText("ዝተሓላለኸ ሓሳብ ንምቕላል",font="Nyala", font_size=font_title_size)
-        item4 = MarkupText("ሓሳባት ብምስሊ ንምውካል",font="Nyala", font_size=font_title_size)
+        item1 = MarkupText("መለለዪ ሓባራዊ ቅዲ",font="Nyala", font_size=font_regular_size)
+        item2 =  MarkupText("ሓፈሻዊ ክልሰ-ሓሳብ ንምፍጣር",font="Nyala", font_size=font_regular_size)
+        item3 = MarkupText("ዝተሓላለኸ ሓሳብ ንምቕላል",font="Nyala", font_size=font_regular_size)
+        item4 = MarkupText("ሓሳባት ብምስሊ ንምውካል",font="Nyala", font_size=font_regular_size)
     
         # Create bullet points as simple Text or Dot mobjects
-        bullet1 = Text('•', font_size=font_title_size)
-        bullet2 = Text('•', font_size=font_title_size)
-        bullet3 = Text('•', font_size=font_title_size)
-        bullet4 = Text('•', font_size=font_title_size)
+        bullet1 = Text('•', font_size=font_regular_size)
+        bullet2 = Text('•', font_size=font_regular_size)
+        bullet3 = Text('•', font_size=font_regular_size)
+        bullet4 = Text('•', font_size=font_regular_size)
         list_items = VGroup(
             VGroup(bullet1, item1).arrange(RIGHT, buff=0.2),
             VGroup(bullet2, item2).arrange(RIGHT, buff=0.2),
@@ -531,6 +539,9 @@ class Introduction(Scene):
         self.play(FadeOut(abstraction), FadeOut(list_items), run_time=1)
         self.wait(1)
         
+ # manim -ql -p --disable_caching  -o table_of_content.mp4 logic.py TableOfContents
+ # manim -ql -p --disable_caching  -o introduction.mp4 logic.py Introduction
+
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
