@@ -493,15 +493,17 @@ class Introduction(Scene):
         )
         self.wait(1)
         
-        transport_title = MarkupText("መጓዓዝያ",font="Nyala", font_size=40)
+         transport_title = MarkupText("መጓዓዝያ",font="Nyala", font_size=40)
         letter_a_title = MarkupText(" ሀ ",font="Nyala", font_size=40)
-        transport = VGroup(transport_title).move_to(ORIGIN)
-        self.play(ReplacementTransform(all_transportation_groups, transport), run_time=1)
+        # transport = VGroup(transport_title).move_to(ORIGIN)
+        self.play(ShrinkToCenter(all_transportation_groups), run_time=1)
         self.wait()
-        self.play(Unwrite(transport_title), FadeOut(transport), run_time=1)
-        self.remove(transport_title)
-        self.remove(transport)
 
+        self.play(Write(transport_title), run_time=1)
+        self.wait()
+        self.play(Unwrite(transport_title), run_time=1)
+        # self.play(Unwrite(transport_title), FadeOut(transport), run_time=1)
+        
         self.wait()
         self.play( Write(letter_a_title), run_time=.5)
         
@@ -509,7 +511,6 @@ class Introduction(Scene):
         self.play(FadeOut(letter_a_title), run_time=1)
         
         self.wait()
-        
         
         ### Abstraction
         abstraction = MarkupText("ኣርቅቆ \n",font="Nyala", font_size=font_title_size).next_to(line, 2*DOWN,buff=buff)
