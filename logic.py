@@ -493,7 +493,7 @@ class Introduction(Scene):
         )
         self.wait(1)
         
-         transport_title = MarkupText("መጓዓዝያ",font="Nyala", font_size=40)
+        transport_title = MarkupText("መጓዓዝያ",font="Nyala", font_size=40)
         letter_a_title = MarkupText(" ሀ ",font="Nyala", font_size=40)
         # transport = VGroup(transport_title).move_to(ORIGIN)
         self.play(ShrinkToCenter(all_transportation_groups), run_time=1)
@@ -511,6 +511,7 @@ class Introduction(Scene):
         self.play(FadeOut(letter_a_title), run_time=1)
         
         self.wait()
+        
         
         ### Abstraction
         abstraction = MarkupText("ኣርቅቆ \n",font="Nyala", font_size=font_title_size).next_to(line, 2*DOWN,buff=buff)
@@ -539,6 +540,7 @@ class Introduction(Scene):
         self.wait()
         self.play(FadeOut(abstraction), FadeOut(list_items), run_time=1)
         self.wait(1)
+        
         
  # manim -ql -p --disable_caching  -o table_of_content.mp4 logic.py TableOfContents
  # manim -ql -p --disable_caching  -o introduction.mp4 logic.py Introduction
