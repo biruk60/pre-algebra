@@ -13,7 +13,57 @@ def layout()->[mobject.types.image_mobject.ImageMobject, mobject.text.text_mobje
     bg_text.set_z_index(-9)  # Keep behind everything
     return background, bg_text 
         
-    
+from manim import *
+
+class HistoryTimeline(Scene):
+    def construct(self):
+        # Timeline horizontal line
+        timeline = Line(LEFT*6, RIGHT*6, stroke_width=4)
+
+        # Milestone data: (x, year, color, icon, title, desc, position)
+        milestones = [
+            (-5, "2017", BLUE, "✈️", "Title Here", "Description text commonly used as placeholder", DOWN),
+            (-2, "2019", YELLOW, "🚀", "Title Here", "Description text commonly used as placeholder", UP),
+            (0, "2021", PINK, "⏳", "Title Here", "Description text commonly used as placeholder", DOWN),
+            (3, "2023", BLUE, "🎯", "Title Here", "Description text commonly used as placeholder", UP),
+        ]
+
+        self.add(timeline)
+        dots = []
+        for x, year, color, icon, title, desc, position in milestones:
+            # Marker dot
+            dot = Dot(point=[x, 0, 0], color=color, radius=0.13)
+            dots.append(dot)
+
+            # Vertical connector
+            line = Line([x, 0, 0], [x, 1.8 if position==UP else -1.8, 0], stroke_width=3, color=color)
+            self.add(dot, line)
+
+            # Icon in circle
+            circ = Circle(radius=0.65, color=color, stroke_width=3)
+            circ.move_to([x, 1.2 if position==UP else -1.2, 0])
+            icon_text = Text(icon, font_size=60)
+            icon_text.move_to(circ.get_center())
+            self.add(circ, icon_text)
+
+            # Year text
+            year_text = Text(year, font_size=54, color=GREY_A, weight=BOLD)
+            year_text.next_to(circ, UP if position==UP else DOWN)
+            self.add(year_text)
+
+            # Title
+            title_text = Text(title, font_size=32, color=WHITE, weight=BOLD)
+            title_text.next_to(year_text, DOWN)
+            self.add(title_text)
+
+            # Sub-description text
+            desc_text = Text(desc, font_size=18, color=GREY_C, line_spacing=0.7)
+            desc_text.next_to(title_text, DOWN)
+            desc_text.align_to(title_text, LEFT)
+            self.add(desc_text)
+
+        # Optionally animate the scene constructively
+        self.wait(2) 
 
 class TableOfContents(Scene):
     def construct(self):
