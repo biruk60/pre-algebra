@@ -22,48 +22,76 @@ class HistoryTimeline(Scene):
 
         # Milestone data: (x, year, color, icon, title, desc, position)
         milestones = [
-            (-5, "2017", BLUE, "✈️", "Title Here", "Description text commonly used as placeholder", DOWN),
-            (-2, "2019", YELLOW, "🚀", "Title Here", "Description text commonly used as placeholder", UP),
-            (0, "2021", PINK, "⏳", "Title Here", "Description text commonly used as placeholder", DOWN),
-            (3, "2023", BLUE, "🎯", "Title Here", "Description text commonly used as placeholder", UP),
+            (-5, "2017", BLUE, "assets/woman-shopping-svgrepo-com.svg", "Title Here", "Former President Barack Obama is urging voters to support Gov. \nGavin Newsom’s redistricting campaign in California, \nwarning that next month’s special election could determine the fate of the country.", "DOWN"),
+            (-2, "2019", YELLOW, "assets/woman-shopping-svgrepo-com.svg", "Title Here", "Description text commonly used as placeholder", "UP"),
+            (0, "2021", PINK, "assets/woman-shopping-svgrepo-com.svg", "Title Here", "Description text commonly used as placeholder", "DOWN"),
+            (3, "2023", BLUE, "assets/woman-shopping-svgrepo-com.svg", "Title Here", "Description text commonly used as placeholder", "UP"),
         ]
 
         self.add(timeline)
         dots = []
         for x, year, color, icon, title, desc, position in milestones:
             # Marker dot
-            dot = Dot(point=[x, 0, 0], color=color, radius=0.13)
+            dot = Dot(point=(x, 0, 0), color=color, radius=0.05)
             dots.append(dot)
-
-            # Vertical connector
-            line = Line([x, 0, 0], [x, 1.8 if position==UP else -1.8, 0], stroke_width=3, color=color)
-            self.add(dot, line)
+            # line = Line((x, 0, 0), (x, 1.8 , 0), stroke_width=3, color=color)
+            # self.add(dot, line)
+            #Vertical connector
+            if position=="UP":
+                line = Line((x, 0, 0), (x, .55 , 0), stroke_width=3, color=color)
+                self.add(dot, line)
+            else:
+                line = Line((x, 0, 0), (x, -0.55, 0), stroke_width=3, color=color)
+                self.add(dot, line)
+                
 
             # Icon in circle
             circ = Circle(radius=0.65, color=color, stroke_width=3)
-            circ.move_to([x, 1.2 if position==UP else -1.2, 0])
-            icon_text = Text(icon, font_size=60)
-            icon_text.move_to(circ.get_center())
-            self.add(circ, icon_text)
+            
+            if position=="UP":
+                circ.move_to((x, 1.2 , 0))
+            else:
+                circ.move_to((x, -1.2, 0))
+            img = SVGMobject(icon).scale(.40)
+            img.move_to(circ.get_center())
+            self.add(circ, img)
 
             # Year text
-            year_text = Text(year, font_size=54, color=GREY_A, weight=BOLD)
-            year_text.next_to(circ, UP if position==UP else DOWN)
+            year_text = Text(year, font_size=30, color=GREY_A, weight=BOLD)
+            year_text.next_to(circ, UP if position=="UP" else DOWN)
+    
             self.add(year_text)
 
             # Title
-            title_text = Text(title, font_size=32, color=WHITE, weight=BOLD)
-            title_text.next_to(year_text, DOWN)
+            title_text = Text(title, font_size=20, color=WHITE, weight=BOLD)
+            title_text.next_to(year_text, UP if position=="UP" else DOWN)
             self.add(title_text)
 
             # Sub-description text
-            desc_text = Text(desc, font_size=18, color=GREY_C, line_spacing=0.7)
-            desc_text.next_to(title_text, DOWN)
+            desc_text = Paragraph(desc, font_size=16, color=WHITE, line_spacing=0.7,  width=5,)
+            
+            desc_text.next_to(title_text,  UP if position=="UP" else DOWN)
             desc_text.align_to(title_text, LEFT)
             self.add(desc_text)
+            
+        dot1 = Dot(point=4*LEFT, radius=0.04)
+        dot2 = Dot(point=ORIGIN, radius=0.04)
+        dot3 = Dot(point=2*RIGHT, radius=0.04)
+        self.play(Create(dot1), Create(dot2), run_time=1)
+        l= Line(dot1, dot2)
+        self.play(Create(l),  run_time=1)
+        
+        brace1 = BraceBetweenPoints(dot1.get_center(), dot2.get_center(), direction=DOWN, color=GREEN)
+        self.play(Create(brace1), run_time=1)
+        
+        self.play(Create(dot3), run_time=1)
+        brace2 = BraceBetweenPoints(dot2.get_center(), dot3.get_center(), direction=UP, color=BLUE)
+        self.play(Create(brace2), run_time=1)
+        self.wait()
 
         # Optionally animate the scene constructively
-        self.wait(2) 
+        self.wait(2)      
+
 
 class TableOfContents(Scene):
     def construct(self):
