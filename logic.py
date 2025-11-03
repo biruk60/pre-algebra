@@ -621,6 +621,16 @@ class Introduction(Scene):
 
 class Proposition(Scene):
     def construct(self):
+        background, bg_text = layout()
+        self.add(background)  
+
+        # Add text as a fixed background element
+        self.add(bg_text)
+        self.wait()
+        font_title_size= 45
+        font_regular_size = 23
+        
+        buff=0.275   
         font_size = 23
         proposition = MarkupText("2 ሓሳብ", font_size=font_size, font="Nyala")
         """ Whether we are trying to solve a problem, taking part in a debate, we are engaged in a mental activity called 'logical reasoning'. This reasoning is usually expressed in terms of declarative sentences. The sentences we come 
@@ -653,23 +663,61 @@ class Proposition(Scene):
          1. This car is black and one plus one is 3. 
          2. The sum of the interior angles of any triangle is always 180 or Mekele is the capital of Tigray. 
 
-         We denote the simple propostions by small letters such as p, q, r, s, etc. We shall see how to determin the truth value of compound propositions from the truth tables of their components.
+         We denote the simple propostions by small letters such as p, q, r, s, etc. 
          
         
         """
         
-        pass
+       
         
 class Connectives(Scene):
     def construct(self):
         font_size = 23
+        background, bg_text = layout()
+        self.add(background)  
+
+        # Add text as a fixed background element
+        self.add(bg_text)
+        self.wait()
+        font_title_size= 45
+        font_regular_size = 23
+        
+        buff=0.275   
         prop_connectives = MarkupText("2.2 መጣመርቲ", font_size=font_size, font="Nyala")
-        pass
+        """
+        There are five fundamental logical connectives that we need to make ourselves familiar with. 
+        Name: Negation
+        Symbol:¬
+        Complex proposition: ¬p
+        How it is read: Not p, It is false that p
+
+        Name: Conjunction
+        Symbol:∧
+        Complex proposition: p ∧ q
+        How it is read: p and q
+
+        Name: Disjunction
+        Symbol:∨
+        Complex proposition: p ∨ q
+        How it is read: p or q
+
+        Name: Implication
+        Symbol:⇒
+        Complex proposition: p ⇒ q
+        How it is read: if p then q, p implies q
+
+        Name: Bi-implication
+        Symbol:⇔
+        Complex proposition: p⇔ q
+        How it is read:  p if and only if q, if p then q and conversely
+
+        A table that gives truth value of a compound statement is called a truth table.  We shall see how to determin the truth value of compound propositions from the truth tables of their components.
+        """
 
 class TruthTableNEGATION(Scene):
     def construct(self):
         # Table content
-        headers = ["p", "¬ p"]
+        headers = ["p", "¬p"]
         table_data = [
             ["T", "F"],
             ["F", "T"],            
