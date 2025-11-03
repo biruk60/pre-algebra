@@ -618,10 +618,53 @@ class Introduction(Scene):
         self.wait()
         self.play(FadeOut(abstraction), FadeOut(list_items), run_time=1)
         self.wait(1)
+
+class Proposition(Scene):
+    def construct(self):
+        font_size = 23
+        proposition = MarkupText("2 ሓሳብ", font_size=font_size, font="Nyala")
+        """ Whether we are trying to solve a problem, taking part in a debate, we are engaged in a mental activity called 'logical reasoning'. This reasoning is usually expressed in terms of declarative sentences. The sentences we come 
+        across in our every day language are not always declarative sentences. There are also sentences such as questions, commands, suggestions, exclamations. However logic deals only with declarative sentences. 
+        Term: Declarative
+        Definition: Declarative sentence is a sentence that makes a statement, provides a fact, offers an explanation, or conveys information. 
+        Lets consider the following sentences: 
+        1. This car is black.
+        2. Please clean up your room.
+        3. May you live long and prosper!
+        4. What are you doing?
+        Only sentences number 1 is declarative. The rest are not and cannot be dealt with logic. Which brings us to a proposition. 
         
+        Term: proposition
+        Definition: A proposition (or statement) is any meaningful, unambiguous declarative sentence which is either true or false, but not both at the same time in the same respect. 
+        Example: 
+        1. "Africa is a continent." This is a true propostion and is assigned a truth value of T. 
+        2. "Three plus Four is equal to Eight." This is a false proposition and is assigned a truth value of F. 
+
+        There are two types of Propositions. Simple and Compound. 
+        Term: Simple
+        Definition: A simple proposition is a complete sentence that conveys one thought with no connecting words like and, or, not, etc.
+        Example:
+        1. A cat is an animal. 
+        2. Man is mortal.
+
+        Term: Compound
+        Definition: A compound or complex proposition is a sentence that conveys two or more thoughts in one sentence.
+        Example: 
+         1. This car is black and one plus one is 3. 
+         2. The sum of the interior angles of any triangle is always 180 or Mekele is the capital of Tigray. 
+
+         We denote the simple propostions by small letters such as p, q, r, s, etc. We shall see how to determin the truth value of compound propositions from the truth tables of their components.
+         
         
- # manim -ql -p --disable_caching  -o table_of_content.mp4 logic.py TableOfContents
- # manim -ql -p --disable_caching  -o introduction.mp4 logic.py Introduction
+        """
+        
+        pass
+        
+class Connectives(Scene):
+    def construct(self):
+        font_size = 23
+        prop_connectives = MarkupText("2.2 መጣመርቲ", font_size=font_size, font="Nyala")
+        pass
 
 class TruthTableNEGATION(Scene):
     def construct(self):
@@ -670,3 +713,5 @@ class TruthTableNEGATION(Scene):
         
 
 # manim -ql -p --disable_caching  -o outro_video.mp4 .\outro.py OutroScene
+# manim -ql -p --disable_caching  -o table_of_content.mp4 logic.py TableOfContents
+# manim -ql -p --disable_caching  -o introduction.mp4 logic.py Introduction
