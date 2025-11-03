@@ -632,7 +632,10 @@ class Proposition(Scene):
         
         buff=0.275   
         font_size = 23
-        proposition = MarkupText("2 ሓሳብ", font_size=font_size, font="Nyala")
+        title = MarkupText("2 ሓሳብ", font_size=font_size, font="Nyala").to_edge(UP)
+        self.play(Write(title), run_time=.5)
+        line = Line(5*LEFT, 5*RIGHT, color=[YELLOW, BLUE]).next_to(title, DOWN,buff=buff)
+        self.play(Create(line))
         """ Whether we are trying to solve a problem, taking part in a debate, we are engaged in a mental activity called 'logical reasoning'. This reasoning is usually expressed in terms of declarative sentences. The sentences we come 
         across in our every day language are not always declarative sentences. There are also sentences such as questions, commands, suggestions, exclamations. However logic deals only with declarative sentences. 
         Term: Declarative
@@ -644,29 +647,242 @@ class Proposition(Scene):
         4. What are you doing?
         Only sentences number 1 is declarative. The rest are not and cannot be dealt with logic. Which brings us to a proposition. 
         
+        declarative = Paragraph(
+            "Term: Declarative\n"
+            "Definition: Declarative sentence is a sentence that makes a statement, \nprovides a fact, offers an explanation, or conveys information.\n"
+            ,font_size=26,
+            line_spacing=1.5, 
+            
+        ).scale(0.8)        
+        
+        # Get text dimensions
+        dec_width = declarative.width
+        dec_height = declarative.height
+        
+        # Create rectangle slightly larger than text
+        dec_rect = RoundedRectangle(
+            width=dec_width + 0.7,  # padding width
+            height=dec_height + 0.7, # padding height
+            corner_radius=0.3,
+            stroke_color=BLUE,
+            stroke_width=1,
+
+        )
+        
+        dec_group = VGroup(dec_rect, declarative).next_to(title, DOWN,buff=2*buff)
+        self.play(Create(dec_rect), Write(declarative))
+        self.wait(2)
+        
+        item1 = MarkupText("This car is black",font="Nyala", font_size=26)
+        item2 =  MarkupText("Please clean up your room.",font="Nyala", font_size=26)
+        item3 = MarkupText("May you live long and prosper!",font="Nyala", font_size=26)
+        item4 = MarkupText("What are you doing?",font="Nyala", font_size=26)
+        
+        bullet1 = Text('1.', font_size=26)
+        bullet2 = Text('2.', font_size=26)
+        bullet3 = Text('3.', font_size=26)
+        bullet4 = Text('4.', font_size=26)
+        vg1 = VGroup(bullet1, item1).arrange(RIGHT, buff=0.2)
+        vg2 = VGroup(bullet2, item2).arrange(RIGHT, buff=0.2)
+        vg3 = VGroup(bullet3, item3).arrange(RIGHT, buff=0.2)
+        vg4 = VGroup(bullet4, item4).arrange(RIGHT, buff=0.2)
+        
+        list_items = VGroup(
+            vg1,
+            vg2,
+            vg3,
+            vg4
+        ).arrange(DOWN, aligned_edge=LEFT).next_to(dec_group, DOWN,buff=buff)
+
+        for row in list_items:
+            self.play(Write(row))
+            self.wait(.5)
+        
+        self.wait(2)
+        col1 = SurroundingRectangle(vg1, stroke_color=BLUE,
+            stroke_width=1,)
+        self.play(Create(col1), run_time=1)
+        self.wait() 
+        self.play(FadeOut(dec_group), FadeOut(list_items), FadeOut(col1), runt_time=1)
+        self.wait()
+        """
+        """
         Term: proposition
         Definition: A proposition (or statement) is any meaningful, unambiguous declarative sentence which is either true or false, but not both at the same time in the same respect. 
         Example: 
         1. "Africa is a continent." This is a true propostion and is assigned a truth value of T. 
         2. "Three plus Four is equal to Eight." This is a false proposition and is assigned a truth value of F. 
+        
+        
+        proposition = Paragraph(
+            "Term: Proposition\n"
+            "Definition: A proposition (or statement) is any meaningful, unambiguous declarative sentence which is \neither true or false, but not both at the same time in the same respect."
+            ,font_size=26,
+            line_spacing=1.5
+        ).scale(0.8)
+        
+        # Get text dimensions
+        prop_width = proposition.width
+        prop_height = proposition.height
+        
+        # Create rectangle slightly larger than text
+        prop_rect = RoundedRectangle(
+            width=prop_width + 0.7,  # padding width
+            height=prop_height + 0.7, # padding height
+            corner_radius=0.3,
+            stroke_color=BLUE,
+            stroke_width=1,
 
+        )
+        
+        prop_group = VGroup(prop_rect, proposition).next_to(title, DOWN,buff=2*buff)
+        self.play(Create(prop_rect), Write(proposition))
+        self.wait(2)
+        
+        item1 = MarkupText("Africa is a continent.",font="Nyala", font_size=26)
+        item2 =  MarkupText("Three plus Four is equal to Eight.",font="Nyala", font_size=26)
+        truth = MarkupText(" = T",font="Nyala", font_size=26, color=GREEN).set_opacity(0)
+        false = MarkupText(" = F",font="Nyala", font_size=26, color=RED).set_opacity(0)
+        
+        
+        bullet1 = Text('1.', font_size=26)
+        bullet2 = Text('2.', font_size=26)
+        
+        vg1 = VGroup(bullet1, item1, truth).arrange(RIGHT, buff=0.2)
+        vg2 = VGroup(bullet2, item2, false).arrange(RIGHT, buff=0.2)
+        
+        
+        prop_items = VGroup(
+            vg1,
+            vg2,           
+        ).arrange(DOWN, aligned_edge=LEFT).next_to(prop_group, DOWN,buff=buff)
+
+        for row in prop_items:
+            self.play(Write(row))
+            self.wait(.5)
+        
+        self.wait(2)
+        self.play(truth.animate.set_opacity(1), run_time=.5)
+        self.wait(1)
+        self.play(false.animate.set_opacity(1), run_time=.5)
+        self.wait(2)
+        self.play(FadeOut(prop_items), FadeOut(prop_group), run_time=.5)
+        self.wait(2)
+        """
+        """
         There are two types of Propositions. Simple and Compound. 
         Term: Simple
         Definition: A simple proposition is a complete sentence that conveys one thought with no connecting words like and, or, not, etc.
         Example:
         1. A cat is an animal. 
         2. Man is mortal.
+        """
+        simple_proposition = Paragraph(
+            "Term: Simple Proposition\n"
+            "Definition: A simple proposition is a complete sentence that conveys one thought\n with no connecting words like and, or, not, etc."
+            ,font_size=26,
+            line_spacing=1.5
+        ).scale(0.8)
+        
+        # Get text dimensions
+        simp_prop_width = simple_proposition.width
+        simp_prop_height = simple_proposition.height
+        
+        # Create rectangle slightly larger than text
+        simp_prop_rect = RoundedRectangle(
+            width=simp_prop_width + 0.7,  # padding width
+            height=simp_prop_height + 0.7, # padding height
+            corner_radius=0.3,
+            stroke_color=BLUE,
+            stroke_width=1,
 
+        )
+        
+        simp_prop_group = VGroup(simp_prop_rect, simple_proposition).next_to(title, DOWN,buff=2*buff)
+        self.play(Create(simp_prop_rect), Write(simple_proposition))
+        self.wait(2)        
+        item1 = MarkupText("A cat is an animal",font="Nyala", font_size=24)
+        item2 =  MarkupText("Man is mortal.",font="Nyala", font_size=24)       
+        
+        bullet1 = Text('1.', font_size=26)
+        bullet2 = Text('2.', font_size=26)
+        
+        vg1 = VGroup(bullet1, item1).arrange(RIGHT, buff=0.2)
+        vg2 = VGroup(bullet2, item2).arrange(RIGHT, buff=0.2)
+        
+        
+        simp_prop_items = VGroup(
+            vg1,
+            vg2,           
+        ).arrange(DOWN, aligned_edge=LEFT).next_to(simp_prop_group, DOWN,buff=buff)
+
+        for row in simp_prop_items:
+            self.play(Write(row))
+            self.wait(.5)
+            
+        item3 = MarkupText("We denote the simple propostions by small letters such as p, q, r, s, etc. ",font="Nyala", font_size=24).next_to(simp_prop_items, DOWN,buff=2*buff).to_edge(LEFT, buff=2*buff)
+        
+        self.play(Write(item3), run_time=.5)
+        
+        
+        self.wait(2)
+        self.play(FadeOut(simp_prop_items), FadeOut(simp_prop_group), FadeOut(item3), run_time=.5)
+        self.wait(2)
+        """
         Term: Compound
         Definition: A compound or complex proposition is a sentence that conveys two or more thoughts in one sentence.
         Example: 
-         1. This car is black and one plus one is 3. 
-         2. The sum of the interior angles of any triangle is always 180 or Mekele is the capital of Tigray. 
-
-         We denote the simple propostions by small letters such as p, q, r, s, etc. 
-         
+        1. This car is black and one plus one is 3. 
+        2. The sum of the interior angles of any triangle is always 180 or Mekele is the capital of Tigray.        
         
         """
+        compound_proposition = Paragraph(
+            "Term: Compound Proposition\n"
+            "Definition: A compound or complex proposition is a sentence that conveys two or more thoughts in one sentence."
+            ,font_size=26,
+            line_spacing=1.5
+        ).scale(0.8)
+        
+        # Get text dimensions
+        comp_prop_width = compound_proposition.width
+        comp_prop_height = compound_proposition.height
+        
+        # Create rectangle slightly larger than text
+        comp_prop_rect = RoundedRectangle(
+            width=comp_prop_width + 0.7,  # padding width
+            height=comp_prop_height + 0.7, # padding height
+            corner_radius=0.3,
+            stroke_color=BLUE,
+            stroke_width=1,
+
+        )
+        
+        comp_prop_group = VGroup(comp_prop_rect, compound_proposition).next_to(title, DOWN,buff=2*buff)
+        self.play(Create(comp_prop_rect), Write(compound_proposition))
+        self.wait(2)        
+        item1 = MarkupText("This car is black and one plus one is 3.",font="Nyala", font_size=24)
+        item2 =  MarkupText("The sum of the interior angles of any triangle is always 180 or Mekele is the capital of Tigray.",font="Nyala", font_size=24)       
+        
+        
+        bullet1 = Text('1.', font_size=26)
+        bullet2 = Text('2.', font_size=26)
+        
+        vg1 = VGroup(bullet1, item1).arrange(RIGHT, buff=0.2)
+        vg2 = VGroup(bullet2, item2).arrange(RIGHT, buff=0.2)
+        
+        
+        comp_prop_items = VGroup(
+            vg1,
+            vg2,           
+        ).arrange(DOWN, aligned_edge=LEFT).next_to(comp_prop_group, DOWN,buff=buff)
+
+        for row in comp_prop_items:
+            self.play(Write(row))
+            self.wait(.5)
+                
+        self.wait(2)
+        self.play(FadeOut(comp_prop_items), FadeOut(comp_prop_group), run_time=.5)
+        self.wait(2)
         
        
         
